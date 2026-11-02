@@ -430,12 +430,32 @@ body {
     transform: scale(0.92);
 }
 
+.track-container {
+    max-width: 120px;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    margin-left: 6px;
+    /* Softly fades the edges of the text as it scrolls */
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
 .track-title {
     font-size: 11px;
     color: var(--txt-color);
-    margin-left: 4px;
-    max-width: 130px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    display: inline-block;
+    /* Smooth back-and-forth panning animation */
+    animation: scrollTitle 6s ease-in-out infinite alternate;
 }
+
+@keyframes scrollTitle {
+    0% {
+        transform: translateX(10px);
+    }
+    100% {
+        /* Pushes long titles to the left to reveal hidden text */
+        transform: translateX(-50%);
+    }
+}
+
