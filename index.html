@@ -14,15 +14,17 @@
     <h1 class="title">Click on the envelope!!</h1>
 
     <div class="container"> 
-        <!-- Side Decorations-->
-        <!-- <div class="decor decor-left-1">⭐</div>
-        <div class="decor decor-left-2"> <img src="images\videoframe_152.png" width="150px" height="auto"></div>
-        <div class="decor decor-left-3">✌️</div>
-        <div class="decor decor-left-4">🎂</div>
-        <div class="decor decor-right-1">💕</div>
-        <div class="decor decor-right-2">⭐</div>
-        <div class="decor decor-right-3">🥳</div>
-        <div class="decor decor-right-4">🎊</div> -->
+
+        <!-- Multi-Song Retro Music Player -->
+        <div class="music-player">
+            <button id="prevBtn" class="player-btn" title="Previous Song">⏮</button>
+            <button id="playPauseBtn" class="player-btn">▶ Play</button>
+            <button id="nextBtn" class="player-btn" title="Next Song">⏭</button>
+            <div id="trackTitle" class="track-title">Select a song</div>
+        </div>
+
+        <!-- Audio Element -->
+        <audio id="bgMusic"></audio>
 
         <!-- Removed 'flap' class so it starts closed by default -->
         <div class="envelope-wrapper" id="envelopeWrapper"> 
@@ -31,7 +33,8 @@
                     <div class="letter-content">
                         <div class="text">
                             <strong>Happy Birthday Love!!</strong>
-                            <p>I made this simple website just for you. It might not be much, but I hope it brings a smile to your face! Wag ka na magalit ahhh 😆😆</p>
+                            <p>I made this simple website just for you! It might not be much, but I hope it brings a smile to your face! Wag ka na magalit ahhh 😆😆</p>
+                            <p style="font-size: 12px;"><strong> I Love You! </strong></p>
                             <p style="margin-left: -200px;"><strong>Jp ✌️</strong></p>
                             <div class="art-container">
                                 <div class="pixelart-to-css"></div>
@@ -47,23 +50,91 @@
     <script> 
         const envelopeWrapper = document.getElementById('envelopeWrapper');
 
-        envelopeWrapper.addEventListener('click', () => {
-    // Toggle flap class
-            const isOpen = envelopeWrapper.classList.toggle('flap');
+// 1. Define your playlist here (Add your actual mp3 filenames and titles)
+const playlist = [
+    { title: "IVOS - Captivated", src: "music\\IV OF SPADES - Captivated (Official Audio).mp3" },
+    { title: "Zild - Lia", src: "music\\zild.mp3" },
+    { title: "TONEEJAY - 711", src: "music\\toneejay.mp3" }
+];
 
-    // Trigger confetti ONLY when opening, timed with the letter pop-out
-            if (isOpen) {
-        // Delay confetti slightly (e.g., 500ms) to sync with the letter popping out
-                setTimeout(() => {
-                    confetti({
-                        particleCount: 80,
-                        spread: 70,
-                        origin: { y: 0.6 },
-                        colors: ['#f1c40f', '#e74c3c', '#e67e22', '#ffffff', '#ff6b6b']
-                });
+let currentTrackIndex = 0;
+const bgMusic = document.getElementById('bgMusic');
+const playPauseBtn = document.getElementById('playPauseBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const trackTitle = document.getElementById('trackTitle');
+
+// Load a track into the audio player
+function loadTrack(index) {
+    bgMusic.src = playlist[index].src;
+    trackTitle.textContent = playlist[index].title;
+    bgMusic.load();
+}
+
+function playTrack() {
+    bgMusic.play().then(() => {
+        playPauseBtn.textContent = '⏸ Pause';
+    }).catch(error => {
+        console.log("Audio playback restricted:", error);
+    });
+}
+
+function pauseTrack() {
+    bgMusic.pause();
+    playPauseBtn.textContent = '▶ Play';
+}
+
+// Button Event Listeners
+playPauseBtn.addEventListener('click', () => {
+    if (bgMusic.paused) {
+        playTrack();
+    } else {
+        pauseTrack();
+    }
+});
+
+prevBtn.addEventListener('click', () => {
+    currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+    loadTrack(currentTrackIndex);
+    playTrack();
+});
+
+nextBtn.addEventListener('click', () => {
+    currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+    loadTrack(currentTrackIndex);
+    playTrack();
+});
+
+// Automatically jump to the next song when the current one finishes
+bgMusic.addEventListener('ended', () => {
+    currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+    loadTrack(currentTrackIndex);
+    playTrack();
+});
+
+// Initialize the first song on load
+loadTrack(currentTrackIndex);
+
+// Envelope click trigger (optional: starts playing music and triggers confetti when opened)[cite: 1]
+envelopeWrapper.addEventListener('click', () => {
+    const isOpen = envelopeWrapper.classList.toggle('flap');
+
+    if (isOpen) {
+        if (bgMusic.paused) {
+            playTrack();
+        }
+        
+        // Trigger confetti
+        setTimeout(() => {
+            confetti({
+                particleCount: 80,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#f1c40f', '#e74c3c', '#e67e22', '#ffffff', '#ff6b6b']
+            });
         }, 500);
     }
-        });
+});
     </script>
 
     <!-- Canvas Confetti CDN -->

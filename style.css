@@ -145,7 +145,7 @@ body {
     justify-content: flex-start;
     align-items: center;
     transform: scale(0.1) translateX(950px);
-    margin-top: -60px;
+    margin-top: -80px;
     margin-bottom: -50px;
 }
 
@@ -394,4 +394,48 @@ body {
     .container {
         transform: scale(0.70);
     }
+}
+
+/*Music*/
+/* --- RETRO MUSIC PLAYER STYLES --- */
+.music-player {
+    position: absolute;
+    bottom: -65px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--primary);
+    padding: 8px 12px;
+    border: 2px solid var(--txt-color);
+    border-radius: 6px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    z-index: 100;
+}
+
+.player-btn {
+    background: var(--envelope-tab);
+    border: 2px solid var(--txt-color);
+    color: var(--txt-color);
+    padding: 6px 10px;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: transform 0.1s ease;
+}
+
+.player-btn:active {
+    transform: scale(0.92);
+}
+
+.track-title {
+    font-size: 11px;
+    color: var(--txt-color);
+    margin-left: 4px;
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
