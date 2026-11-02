@@ -325,63 +325,87 @@ body {
   width: 10px;
 }
 
-/* --- MOBILE RESPONSIVENESS FIXES --- */
+/* --- MOBILE RESPONSIVENESS & PROPORTIONS --- */
 @media screen and (max-width: 600px) {
     body {
         overflow-x: hidden;
-        padding: 5px;
+        padding: 10px;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .title {
-        font-size: 1.2rem;
-        top: 10px;
-        width: 95%;
+        font-size: 1.1rem;
+        top: 15px;
+        width: 90%;
         padding: 0 10px;
     }
 
-    /* Shrink the container more aggressively so the envelope fits standard phones */
+    /* Proportional container scaling for standard phones */
     .container {
-        transform: scale(0.65);
+        transform: scale(0.68);
         transform-origin: center;
-        margin-top: 20px;
+        margin-top: 30px;
+        flex-direction: column;
     }
 
-    /* Bring side decorations closer inward and shrink them */
+    /* Keep the music player perfectly proportioned and centered relative to the envelope */
+    .music-player {
+        bottom: -75px;
+        padding: 6px 10px;
+        gap: 6px;
+    }
+
+    .player-btn {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+
+    .track-container {
+        max-width: 90px;
+        min-width: 0;
+    }
+
+    .track-title {
+        font-size: 10px;
+    }
+
+    /* Scale down and tuck side decorations neatly inward so they don't overflow */
     .decor-left-1 {
         top: -30px;
-        left: 0px;
-        font-size: 40px !important;
+        left: -5px;
+        font-size: 35px !important;
     }
 
     .decor-left-2 {
-        bottom: -20px;
-        left: -5px;
+        bottom: -30px;
+        left: -10px;
     }
     .decor-left-2 img {
-        width: 60px !important;
+        width: 50px !important;
     }
 
     .decor-left-3 {
         top: -20px;
-        right: 15px;
+        right: 10px;
         left: auto;
-        font-size: 35px !important;
+        font-size: 30px !important;
     }
 
-    .decor-left-4, .decor-left-5 {
+    .decor-left-4 {
         display: none;
     }
 
     .decor-right-1 {
         top: -20px;
-        right: 0px;
-        font-size: 40px !important;
+        right: -5px;
+        font-size: 35px !important;
     }
 
     .decor-right-2 {
-        bottom: -20px;
-        right: 0px;
-        font-size: 2.5rem !important;
+        bottom: -25px;
+        right: -5px;
+        font-size: 2rem !important;
     }
 
     .decor-right-3, .decor-right-4 {
@@ -389,10 +413,16 @@ body {
     }
 }
 
-/* Extra small phones (iPhone SE, older Androids) */
+/* Extra small phones (iPhone SE, compact Android devices) */
 @media screen and (max-width: 380px) {
     .container {
-        transform: scale(0.70);
+        transform: scale(0.58);
+        margin-top: 10px;
+    }
+    
+    .title {
+        font-size: 1rem;
+        top: 10px;
     }
 }
 
