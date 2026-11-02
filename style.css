@@ -432,6 +432,7 @@ body {
 
 .track-container {
     max-width: 120px;
+    min-width: 0;
     overflow: hidden;
     white-space: nowrap;
     position: relative;
