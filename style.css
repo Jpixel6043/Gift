@@ -1,0 +1,397 @@
+:root {
+    --primary: #ffffff;
+    --bg-color: #ad8686;
+    --bg-envelope-color: #af854d;
+    --envelope-tab: #e4ab60;
+    --envelope-cover: #cc944c;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --txt-color: #553c3c;
+    --heart-color: #e74c3c;
+}
+
+* {
+    font-family: 'Pixelify Sans', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.title {
+    position: absolute;
+    top: 50px;
+    text-align: center;
+    width: 100%;
+    color: #000000;
+    animation: float-title 4s ease-in-out infinite alternate;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 900px;
+}
+
+.envelope-wrapper {
+    position: relative;
+    background: var(--bg-envelope-color);
+    box-shadow: 0 10px 30px var(--shadow-color);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.envelope {
+    position: relative;
+    width: 320px;
+    height: 230px;
+    /*overflow: hidden; */
+    transition: overflow 0.2s ease 0.4s;
+}
+
+/* Top Flap */
+.envelope::before {
+    content: '';
+    position: absolute;
+    z-index: 3;
+    border-top: 130px solid var(--envelope-tab);
+    border-right: 160px solid transparent;
+    border-left: 160px solid transparent;
+    top: 0;
+    left: 0;
+    transform-origin: top;
+    transition: transform 0.4s ease-in-out 1.5s, z-index 0.1s ease 0.4s;
+}
+
+/* Bottom and Side Pockets */
+.envelope::after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    border-top: 130px solid transparent;
+    border-right: 160px solid var(--envelope-cover);
+    border-left: 160px solid var(--envelope-cover);
+    border-bottom: 100px solid var(--envelope-cover);
+    bottom: 0;
+    left: 0;
+    border-radius: 0 0 6px 6px;
+    pointer-events: none;
+}
+
+/* Sliding Letter Card */
+.letter {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateY(0px) translateX(-50%) scale(0.8);
+    width: 85%;
+    height: 75%;
+    background: var(--primary);
+    transition: bottom 0.4s ease-in-out 0s, transform 0.9s ease-in-out 0s, z-index 0s linear 0.4s;
+    padding: 15px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    border-radius: 4px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.letter-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.letter .text {
+    font-size: 12px;
+    color: var(--txt-color);
+    margin-top: 2px;
+    width: 100%;
+}
+
+.letter strong {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* Signature Styling Fix */
+.letter .text p strong {
+    display: inline;
+    margin-bottom: 0;
+}
+
+/* Pixel Art Container inside Letter */
+.art-container {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transform: scale(0.1) translateX(950px);
+    margin-top: -60px;
+    margin-bottom: -50px;
+}
+
+/* Wax Seal Heart */
+.heart {
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    background: var(--heart-color);
+    z-index: 4;
+    transform: translate(-50%, -50%) rotate(45deg);
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 2px 6px var(--shadow-color);
+    cursor: pointer;
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: var(--heart-color);
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -12px;
+    left: 0;
+}
+
+.heart::after {
+    left: -12px;
+    top: 0;
+}
+
+/* --- ANIMATED OPEN STATES (.flap) --- */
+
+.envelope-wrapper.flap .envelope {
+    overflow: visible;
+    transition: overflow 0s linear 0.4s;
+}
+
+.envelope-wrapper.flap .envelope::before {
+    transform: rotateX(180deg);
+    z-index: 0;
+    transition: transform 0.5s ease-in-out 0s, z-index 0.5s ease 0s;
+}
+
+.envelope-wrapper.flap .letter {
+    bottom: 110px;
+    transform: translateX(-50%) scale(1.05) translateY(-100px);
+    z-index: 0;
+    transition: bottom 0.8s ease-in-out 1.0s, transform 0.8s ease-in-out 1.0s, z-index 0s linear 0.85s;
+}
+
+.envelope-wrapper.flap .letter-content {
+    animation: paperFloat 3s ease-in-out infinite alternate 0.9s;
+}
+
+.envelope-wrapper.flap .heart {
+    transform: translate(-50%, -50%) scale(0) rotate(90deg);
+    opacity: 0;
+    transition: all 0.3s ease-in-out 0.1s;
+}
+
+/* --- DECORATIONS --- */
+.decor {
+    position: absolute;
+    font-size: 2rem;
+    color: #e74c3c;
+    user-select: none;
+    pointer-events: none;
+    animation: float 3s ease-in-out infinite alternate;
+}
+
+.decor img {
+    display: block;
+    pointer-events: none;
+}
+
+.decor-left-1 {
+    top: -90%;
+    left: -20%;
+    color: #f1c40f; 
+    animation-delay: 0s;
+    font-size: 100px;
+}
+
+.decor-left-2 {
+    bottom: -20%;
+    left: -10%;
+    animation-delay: 0.8s;
+}
+
+.decor-left-3 {
+    top: -70%;
+    left: 70%;
+    color: #f1c40f; 
+    animation-delay: 0s;
+    font-size: 100px;
+}
+
+.decor-left-4 {
+    top: -70%;
+    left: 10%;
+    color: #f1c40f; 
+    animation-delay: 0s;
+    font-size: 100px;
+}
+
+.decor-right-1 {
+    top: -50%;
+    right: -15%;
+    color: #e74c3c; 
+    animation-delay: 0.4s;
+    font-size: 100px;
+}
+
+.decor-right-2 {
+    bottom: -50%;
+    right: -20%;
+    color: #f1c40f; 
+    font-size: 5.2rem;
+    animation-delay: 1.2s;
+}
+
+.decor-right-3 {
+    bottom: 20%;
+    right: 10%;
+    color: #f1c40f; 
+    font-size: 5.2rem;
+    animation-delay: 1.2s;
+}
+
+.decor-right-4 {
+    bottom: -90%;
+    left: 5%;
+    color: #f1c40f; 
+    font-size: 10rem;
+    animation-delay: 1.2s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(-5deg);
+    }
+    100% {
+        transform: translateY(-15px) rotate(5deg);
+    }
+}
+
+@keyframes float-title {
+    0% {
+        transform: translateY(0px) rotate(-5deg);
+    }
+    100% {
+        transform: translateY(-5px) rotate(5deg);
+    }
+}
+
+@keyframes paperFloat {
+    0% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(-6px);
+    }
+}
+
+/* --- PIXEL ART CSS --- */
+.pixelart-to-css {
+  box-shadow: 70px 40px 0 0 rgba(0, 0, 0, 1), 80px 40px 0 0 rgba(0, 0, 0, 1), 90px 40px 0 0 rgba(0, 0, 0, 1), 180px 40px 0 0 rgba(0, 0, 0, 1), 190px 40px 0 0 rgba(0, 0, 0, 1), 200px 40px 0 0 rgba(0, 0, 0, 1), 50px 50px 0 0 rgba(0, 0, 0, 1), 60px 50px 0 0 rgba(0, 0, 0, 1), 70px 50px 0 0 rgba(0, 0, 0, 1), 80px 50px 0 0 rgba(0, 0, 0, 1), 90px 50px 0 0 rgba(0, 0, 0, 1), 100px 50px 0 0 rgba(0, 0, 0, 1), 110px 50px 0 0 rgba(0, 0, 0, 1), 120px 50px 0 0 rgba(0, 0, 0, 1), 160px 50px 0 0 rgba(0, 0, 0, 1), 170px 50px 0 0 rgba(0, 0, 0, 1), 180px 50px 0 0 rgba(0, 0, 0, 1), 190px 50px 0 0 rgba(0, 0, 0, 1), 200px 50px 0 0 rgba(0, 0, 0, 1), 210px 50px 0 0 rgba(0, 0, 0, 1), 40px 60px 0 0 rgba(0, 0, 0, 1), 50px 60px 0 0 rgba(0, 0, 0, 1), 60px 60px 0 0 rgba(0, 0, 0, 1), 70px 60px 0 0 rgba(255, 0, 0, 1), 80px 60px 0 0 rgba(255, 0, 0, 1), 90px 60px 0 0 rgba(255, 0, 0, 1), 100px 60px 0 0 rgba(255, 0, 0, 1), 110px 60px 0 0 rgba(0, 0, 0, 1), 120px 60px 0 0 rgba(0, 0, 0, 1), 150px 60px 0 0 rgba(0, 0, 0, 1), 160px 60px 0 0 rgba(0, 0, 0, 1), 170px 60px 0 0 rgba(0, 0, 0, 1), 180px 60px 0 0 rgba(255, 0, 0, 1), 190px 60px 0 0 rgba(255, 0, 0, 1), 200px 60px 0 0 rgba(255, 0, 0, 1), 210px 60px 0 0 rgba(0, 0, 0, 1), 220px 60px 0 0 rgba(0, 0, 0, 1), 40px 70px 0 0 rgba(0, 0, 0, 1), 50px 70px 0 0 rgba(0, 0, 0, 1), 60px 70px 0 0 rgba(255, 0, 0, 1), 70px 70px 0 0 rgba(255, 0, 0, 1), 80px 70px 0 0 rgba(255, 0, 0, 1), 90px 70px 0 0 rgba(255, 0, 0, 1), 100px 70px 0 0 rgba(255, 0, 0, 1), 110px 70px 0 0 rgba(255, 0, 0, 1), 120px 70px 0 0 rgba(0, 0, 0, 1), 130px 70px 0 0 rgba(0, 0, 0, 1), 140px 70px 0 0 rgba(0, 0, 0, 1), 150px 70px 0 0 rgba(0, 0, 0, 1), 160px 70px 0 0 rgba(0, 0, 0, 1), 170px 70px 0 0 rgba(255, 0, 0, 1), 180px 70px 0 0 rgba(255, 0, 0, 1), 190px 70px 0 0 rgba(255, 0, 0, 1), 200px 70px 0 0 rgba(255, 0, 0, 1), 210px 70px 0 0 rgba(255, 0, 0, 1), 220px 70px 0 0 rgba(0, 0, 0, 1), 230px 70px 0 0 rgba(0, 0, 0, 1), 30px 80px 0 0 rgba(0, 0, 0, 1), 40px 80px 0 0 rgba(0, 0, 0, 1), 50px 80px 0 0 rgba(0, 0, 0, 1), 60px 80px 0 0 rgba(255, 0, 0, 1), 70px 80px 0 0 rgba(255, 0, 0, 1), 80px 80px 0 0 rgba(255, 0, 0, 1), 90px 80px 0 0 rgba(255, 0, 0, 1), 100px 80px 0 0 rgba(255, 0, 0, 1), 110px 80px 0 0 rgba(255, 0, 0, 1), 120px 80px 0 0 rgba(255, 0, 0, 1), 130px 80px 0 0 rgba(0, 0, 0, 1), 140px 80px 0 0 rgba(0, 0, 0, 1), 150px 80px 0 0 rgba(255, 0, 0, 1), 160px 80px 0 0 rgba(255, 0, 0, 1), 170px 80px 0 0 rgba(255, 0, 0, 1), 180px 80px 0 0 rgba(255, 0, 0, 1), 190px 80px 0 0 rgba(255, 0, 0, 1), 200px 80px 0 0 rgba(255, 0, 0, 1), 210px 80px 0 0 rgba(255, 0, 0, 1), 220px 80px 0 0 rgba(255, 0, 0, 1), 230px 80px 0 0 rgba(0, 0, 0, 1), 240px 80px 0 0 rgba(0, 0, 0, 1), 30px 90px 0 0 rgba(0, 0, 0, 1), 40px 90px 0 0 rgba(0, 0, 0, 1), 50px 90px 0 0 rgba(255, 0, 0, 1), 60px 90px 0 0 rgba(255, 0, 0, 1), 70px 90px 0 0 rgba(255, 0, 0, 1), 80px 90px 0 0 rgba(255, 0, 0, 1), 90px 90px 0 0 rgba(255, 0, 0, 1), 100px 90px 0 0 rgba(255, 0, 0, 1), 110px 90px 0 0 rgba(255, 0, 0, 1), 120px 90px 0 0 rgba(255, 0, 0, 1), 130px 90px 0 0 rgba(0, 0, 0, 1), 140px 90px 0 0 rgba(0, 0, 0, 1), 150px 90px 0 0 rgba(255, 0, 0, 1), 160px 90px 0 0 rgba(255, 0, 0, 1), 170px 90px 0 0 rgba(255, 0, 0, 1), 180px 90px 0 0 rgba(255, 0, 0, 1), 190px 90px 0 0 rgba(255, 0, 0, 1), 200px 90px 0 0 rgba(255, 0, 0, 1), 210px 90px 0 0 rgba(255, 0, 0, 1), 220px 90px 0 0 rgba(255, 0, 0, 1), 230px 90px 0 0 rgba(0, 0, 0, 1), 240px 90px 0 0 rgba(0, 0, 0, 1), 30px 100px 0 0 rgba(0, 0, 0, 1), 40px 100px 0 0 rgba(0, 0, 0, 1), 50px 100px 0 0 rgba(255, 0, 0, 1), 60px 100px 0 0 rgba(255, 0, 0, 1), 70px 100px 0 0 rgba(255, 0, 0, 1), 80px 100px 0 0 rgba(255, 0, 0, 1), 90px 100px 0 0 rgba(255, 0, 0, 1), 100px 100px 0 0 rgba(255, 0, 0, 1), 110px 100px 0 0 rgba(255, 0, 0, 1), 120px 100px 0 0 rgba(255, 0, 0, 1), 130px 100px 0 0 rgba(255, 0, 0, 1), 140px 100px 0 0 rgba(255, 0, 0, 1), 150px 100px 0 0 rgba(255, 0, 0, 1), 160px 100px 0 0 rgba(255, 0, 0, 1), 170px 100px 0 0 rgba(255, 0, 0, 1), 180px 100px 0 0 rgba(255, 0, 0, 1), 190px 100px 0 0 rgba(255, 0, 0, 1), 200px 100px 0 0 rgba(255, 0, 0, 1), 210px 100px 0 0 rgba(255, 0, 0, 1), 220px 100px 0 0 rgba(255, 0, 0, 1), 230px 100px 0 0 rgba(0, 0, 0, 1), 240px 100px 0 0 rgba(0, 0, 0, 1), 30px 110px 0 0 rgba(0, 0, 0, 1), 40px 110px 0 0 rgba(0, 0, 0, 1), 50px 110px 0 0 rgba(255, 0, 0, 1), 60px 110px 0 0 rgba(255, 0, 0, 1), 70px 110px 0 0 rgba(255, 0, 0, 1), 80px 110px 0 0 rgba(255, 0, 0, 1), 90px 110px 0 0 rgba(255, 0, 0, 1), 100px 110px 0 0 rgba(255, 0, 0, 1), 110px 110px 0 0 rgba(255, 0, 0, 1), 120px 110px 0 0 rgba(255, 0, 0, 1), 130px 110px 0 0 rgba(255, 0, 0, 1), 140px 110px 0 0 rgba(255, 0, 0, 1), 150px 110px 0 0 rgba(255, 0, 0, 1), 160px 110px 0 0 rgba(255, 0, 0, 1), 170px 110px 0 0 rgba(255, 0, 0, 1), 180px 110px 0 0 rgba(255, 0, 0, 1), 190px 110px 0 0 rgba(255, 0, 0, 1), 200px 110px 0 0 rgba(255, 0, 0, 1), 210px 110px 0 0 rgba(255, 0, 0, 1), 220px 110px 0 0 rgba(255, 0, 0, 1), 230px 110px 0 0 rgba(0, 0, 0, 1), 240px 110px 0 0 rgba(0, 0, 0, 1), 40px 120px 0 0 rgba(0, 0, 0, 1), 50px 120px 0 0 rgba(0, 0, 0, 1), 60px 120px 0 0 rgba(255, 0, 0, 1), 70px 120px 0 0 rgba(255, 0, 0, 1), 80px 120px 0 0 rgba(255, 0, 0, 1), 90px 120px 0 0 rgba(255, 0, 0, 1), 100px 120px 0 0 rgba(255, 0, 0, 1), 110px 120px 0 0 rgba(255, 0, 0, 1), 120px 120px 0 0 rgba(255, 0, 0, 1), 130px 120px 0 0 rgba(255, 0, 0, 1), 140px 120px 0 0 rgba(255, 0, 0, 1), 150px 120px 0 0 rgba(255, 0, 0, 1), 160px 120px 0 0 rgba(255, 0, 0, 1), 170px 120px 0 0 rgba(255, 0, 0, 1), 180px 120px 0 0 rgba(255, 0, 0, 1), 190px 120px 0 0 rgba(255, 0, 0, 1), 200px 120px 0 0 rgba(255, 0, 0, 1), 210px 120px 0 0 rgba(255, 0, 0, 1), 220px 120px 0 0 rgba(255, 0, 0, 1), 230px 120px 0 0 rgba(0, 0, 0, 1), 240px 120px 0 0 rgba(0, 0, 0, 1), 40px 130px 0 0 rgba(0, 0, 0, 1), 50px 130px 0 0 rgba(0, 0, 0, 1), 60px 130px 0 0 rgba(255, 0, 0, 1), 70px 130px 0 0 rgba(255, 0, 0, 1), 80px 130px 0 0 rgba(255, 0, 0, 1), 90px 130px 0 0 rgba(255, 0, 0, 1), 100px 130px 0 0 rgba(255, 0, 0, 1), 110px 130px 0 0 rgba(255, 0, 0, 1), 120px 130px 0 0 rgba(255, 0, 0, 1), 130px 130px 0 0 rgba(255, 0, 0, 1), 140px 130px 0 0 rgba(255, 0, 0, 1), 150px 130px 0 0 rgba(255, 0, 0, 1), 160px 130px 0 0 rgba(255, 0, 0, 1), 170px 130px 0 0 rgba(255, 0, 0, 1), 180px 130px 0 0 rgba(255, 0, 0, 1), 190px 130px 0 0 rgba(255, 0, 0, 1), 200px 130px 0 0 rgba(255, 0, 0, 1), 210px 130px 0 0 rgba(255, 0, 0, 1), 220px 130px 0 0 rgba(255, 0, 0, 1), 230px 130px 0 0 rgba(0, 0, 0, 1), 50px 140px 0 0 rgba(0, 0, 0, 1), 60px 140px 0 0 rgba(0, 0, 0, 1), 70px 140px 0 0 rgba(255, 0, 0, 1), 80px 140px 0 0 rgba(255, 0, 0, 1), 90px 140px 0 0 rgba(255, 0, 0, 1), 100px 140px 0 0 rgba(255, 0, 0, 1), 110px 140px 0 0 rgba(255, 0, 0, 1), 120px 140px 0 0 rgba(255, 0, 0, 1), 130px 140px 0 0 rgba(255, 0, 0, 1), 140px 140px 0 0 rgba(255, 0, 0, 1), 150px 140px 0 0 rgba(255, 0, 0, 1), 160px 140px 0 0 rgba(255, 0, 0, 1), 170px 140px 0 0 rgba(255, 0, 0, 1), 180px 140px 0 0 rgba(255, 0, 0, 1), 190px 140px 0 0 rgba(255, 0, 0, 1), 200px 140px 0 0 rgba(255, 0, 0, 1), 210px 140px 0 0 rgba(255, 0, 0, 1), 220px 140px 0 0 rgba(0, 0, 0, 1), 60px 150px 0 0 rgba(0, 0, 0, 1), 70px 150px 0 0 rgba(255, 0, 0, 1), 80px 150px 0 0 rgba(255, 0, 0, 1), 90px 150px 0 0 rgba(255, 0, 0, 1), 100px 150px 0 0 rgba(255, 0, 0, 1), 110px 150px 0 0 rgba(255, 0, 0, 1), 120px 150px 0 0 rgba(255, 0, 0, 1), 130px 150px 0 0 rgba(255, 0, 0, 1), 140px 150px 0 0 rgba(255, 0, 0, 1), 150px 150px 0 0 rgba(255, 0, 0, 1), 160px 150px 0 0 rgba(255, 0, 0, 1), 170px 150px 0 0 rgba(255, 0, 0, 1), 180px 150px 0 0 rgba(255, 0, 0, 1), 190px 150px 0 0 rgba(255, 0, 0, 1), 200px 150px 0 0 rgba(255, 0, 0, 1), 210px 150px 0 0 rgba(0, 0, 0, 1), 220px 150px 0 0 rgba(0, 0, 0, 1), 60px 160px 0 0 rgba(0, 0, 0, 1), 70px 160px 0 0 rgba(0, 0, 0, 1), 80px 160px 0 0 rgba(255, 0, 0, 1), 90px 160px 0 0 rgba(255, 0, 0, 1), 100px 160px 0 0 rgba(255, 0, 0, 1), 110px 160px 0 0 rgba(255, 0, 0, 1), 120px 160px 0 0 rgba(255, 0, 0, 1), 130px 160px 0 0 rgba(255, 0, 0, 1), 140px 160px 0 0 rgba(255, 0, 0, 1), 150px 160px 0 0 rgba(255, 0, 0, 1), 160px 160px 0 0 rgba(255, 0, 0, 1), 170px 160px 0 0 rgba(255, 0, 0, 1), 180px 160px 0 0 rgba(255, 0, 0, 1), 190px 160px 0 0 rgba(255, 0, 0, 1), 200px 160px 0 0 rgba(0, 0, 0, 1), 210px 160px 0 0 rgba(0, 0, 0, 1), 70px 170px 0 0 rgba(0, 0, 0, 1), 80px 170px 0 0 rgba(0, 0, 0, 1), 90px 170px 0 0 rgba(255, 0, 0, 1), 100px 170px 0 0 rgba(255, 0, 0, 1), 110px 170px 0 0 rgba(255, 0, 0, 1), 120px 170px 0 0 rgba(255, 0, 0, 1), 130px 170px 0 0 rgba(255, 0, 0, 1), 140px 170px 0 0 rgba(255, 0, 0, 1), 150px 170px 0 0 rgba(255, 0, 0, 1), 160px 170px 0 0 rgba(255, 0, 0, 1), 170px 170px 0 0 rgba(255, 0, 0, 1), 180px 170px 0 0 rgba(0, 0, 0, 1), 190px 170px 0 0 rgba(0, 0, 0, 1), 200px 170px 0 0 rgba(0, 0, 0, 1), 80px 180px 0 0 rgba(0, 0, 0, 1), 90px 180px 0 0 rgba(0, 0, 0, 1), 100px 180px 0 0 rgba(255, 0, 0, 1), 110px 180px 0 0 rgba(255, 0, 0, 1), 120px 180px 0 0 rgba(255, 0, 0, 1), 130px 180px 0 0 rgba(255, 0, 0, 1), 140px 180px 0 0 rgba(255, 0, 0, 1), 150px 180px 0 0 rgba(255, 0, 0, 1), 160px 180px 0 0 rgba(255, 0, 0, 1), 170px 180px 0 0 rgba(0, 0, 0, 1), 180px 180px 0 0 rgba(0, 0, 0, 1), 90px 190px 0 0 rgba(0, 0, 0, 1), 100px 190px 0 0 rgba(0, 0, 0, 1), 110px 190px 0 0 rgba(0, 0, 0, 1), 120px 190px 0 0 rgba(255, 0, 0, 1), 130px 190px 0 0 rgba(255, 0, 0, 1), 140px 190px 0 0 rgba(255, 0, 0, 1), 150px 190px 0 0 rgba(255, 0, 0, 1), 160px 190px 0 0 rgba(0, 0, 0, 1), 170px 190px 0 0 rgba(0, 0, 0, 1), 110px 200px 0 0 rgba(0, 0, 0, 1), 120px 200px 0 0 rgba(0, 0, 0, 1), 130px 200px 0 0 rgba(255, 0, 0, 1), 140px 200px 0 0 rgba(0, 0, 0, 1), 150px 200px 0 0 rgba(0, 0, 0, 1), 160px 200px 0 0 rgba(0, 0, 0, 1), 120px 210px 0 0 rgba(0, 0, 0, 1), 130px 210px 0 0 rgba(0, 0, 0, 1), 140px 210px 0 0 rgba(0, 0, 0, 1), 120px 220px 0 0 rgba(0, 0, 0, 1), 130px 220px 0 0 rgba(0, 0, 0, 1);
+  height: 10px;
+  width: 10px;
+}
+
+/* --- MOBILE RESPONSIVENESS FIXES --- */
+@media screen and (max-width: 600px) {
+    body {
+        overflow-x: hidden;
+        padding: 5px;
+    }
+
+    .title {
+        font-size: 1.2rem;
+        top: 10px;
+        width: 95%;
+        padding: 0 10px;
+    }
+
+    /* Shrink the container more aggressively so the envelope fits standard phones */
+    .container {
+        transform: scale(0.65);
+        transform-origin: center;
+        margin-top: 20px;
+    }
+
+    /* Bring side decorations closer inward and shrink them */
+    .decor-left-1 {
+        top: -30px;
+        left: 0px;
+        font-size: 40px !important;
+    }
+
+    .decor-left-2 {
+        bottom: -20px;
+        left: -5px;
+    }
+    .decor-left-2 img {
+        width: 60px !important;
+    }
+
+    .decor-left-3 {
+        top: -20px;
+        right: 15px;
+        left: auto;
+        font-size: 35px !important;
+    }
+
+    .decor-left-4, .decor-left-5 {
+        display: none;
+    }
+
+    .decor-right-1 {
+        top: -20px;
+        right: 0px;
+        font-size: 40px !important;
+    }
+
+    .decor-right-2 {
+        bottom: -20px;
+        right: 0px;
+        font-size: 2.5rem !important;
+    }
+
+    .decor-right-3, .decor-right-4 {
+        display: none;
+    }
+}
+
+/* Extra small phones (iPhone SE, older Androids) */
+@media screen and (max-width: 380px) {
+    .container {
+        transform: scale(0.70);
+    }
+}

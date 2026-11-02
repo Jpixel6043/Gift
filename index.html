@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <h1 class="title">Click on the envelope!!</h1>
+
+    <div class="container"> 
+        <!-- Side Decorations-->
+        <!-- <div class="decor decor-left-1">⭐</div>
+        <div class="decor decor-left-2"> <img src="images\videoframe_152.png" width="150px" height="auto"></div>
+        <div class="decor decor-left-3">✌️</div>
+        <div class="decor decor-left-4">🎂</div>
+        <div class="decor decor-right-1">💕</div>
+        <div class="decor decor-right-2">⭐</div>
+        <div class="decor decor-right-3">🥳</div>
+        <div class="decor decor-right-4">🎊</div> -->
+
+        <!-- Removed 'flap' class so it starts closed by default -->
+        <div class="envelope-wrapper" id="envelopeWrapper"> 
+            <div class="envelope">
+                <div class="letter">
+                    <div class="letter-content">
+                        <div class="text">
+                            <strong>Happy Birthday Love!!</strong>
+                            <p>I made this simple website just for you. It might not be much, but I hope it brings a smile to your face! Wag ka na magalit ahhh 😆😆</p>
+                            <p style="margin-left: -200px;"><strong>Jp ✌️</strong></p>
+                            <div class="art-container">
+                                <div class="pixelart-to-css"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            <div class="heart"></div>
+        </div>
+    </div>
+
+    <script> 
+        const envelopeWrapper = document.getElementById('envelopeWrapper');
+
+        envelopeWrapper.addEventListener('click', () => {
+    // Toggle flap class
+            const isOpen = envelopeWrapper.classList.toggle('flap');
+
+    // Trigger confetti ONLY when opening, timed with the letter pop-out
+            if (isOpen) {
+        // Delay confetti slightly (e.g., 500ms) to sync with the letter popping out
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 80,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#f1c40f', '#e74c3c', '#e67e22', '#ffffff', '#ff6b6b']
+                });
+        }, 500);
+    }
+        });
+    </script>
+
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</body>
+</html>
