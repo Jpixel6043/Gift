@@ -955,4 +955,11 @@ body {
     .img-container {
         flex-direction: column; /* Stacks columns vertically on mobile */
     }
+
+    .scene-page#gallery img {
+        max-width: 85%; /* Prevents images from stretching too wide */
+        height: auto;
+        margin: 0 auto 12px auto; /* Centers each image horizontally and spaces them out */
+        display: block;
+    }
 }
