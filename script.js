@@ -117,87 +117,90 @@ cakeArt.addEventListener("keydown", event => {
     if (event.key === "Enter" || event.key === " ") blowCandles();
 });
 
-// ---------------- MICROPHONE DETECTION FOR CANDLES ----------------
-const enableMicBtn = document.getElementById("enableMicBtn");
-const micStatus = document.getElementById("micStatus");
+// --- MICROPHONE BLOW DETECTION FOR BIRTHDAY CAKE ---
+const enableMicBtn = document.getElementById('enableMicBtn');
+const micStatus = document.getElementById('micStatus');
 
-let audioContext;
-let analyser;
-let microphone;
-let micStream;
-let isMicListening = false;
+let audioContext = null;
+let microphone = null;
+let analyser = null;
+let javascriptNode = null;
+let isListening = false;
 
-async function initMicrophone() {
-    if (isMicListening) return;
+// Function to put out the candles
+function extinguishCandles() {
+    cakeArt.classList.add('candles-out');
+    birthdayMessage.classList.add('show');
+    if (typeof confetti === 'function') {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
+    }
+    stopListening();
+}
 
+// Manual click fallback
+cakeArt.addEventListener('click', extinguishCandles);
+wishButton.addEventListener('click', extinguishCandles);
+
+// Enable Mic Listener
+enableMicBtn.addEventListener('click', async () => {
     try {
-        // Request microphone access
-        micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            alert("Microphone API is not supported in this browser.");
+            return;
+        }
+
+        micStatus.textContent = "Requesting microphone access...";
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
         
-        // Initialize Web Audio API
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
         analyser = audioContext.createAnalyser();
-        analyser.fftSize = 256;
+        microphone = audioContext.createMediaStreamSource(stream);
+        
+        javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
+        analyser.smoothingTimeConstant = 0.8;
+        analyser.fftSize = 1024;
 
-        microphone = audioContext.createMediaStreamSource(micStream);
         microphone.connect(analyser);
+        analyser.connect(javascriptNode);
+        javascriptNode.connect(audioContext.destination);
 
-        isMicListening = true;
-        enableMicBtn.style.display = "none";
-        micStatus.textContent = "🎙️ Mic active! Blow into your microphone to put out the candles.";
+        javascriptNode.onaudioprocess = function() {
+            const array = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(array);
+            
+            let values = 0;
+            for (let i = 0; i < array.length; i++) {
+                values += array[i];
+            }
+            const average = values / array.length;
 
-        detectBlow();
+            // Threshold for blowing detection (adjust sensitivity here if needed)
+            if (average > 45 && !cakeArt.classList.contains('candles-out')) {
+                extinguishCandles();
+            }
+        };
+
+        isListening = true;
+        micStatus.textContent = "🎙️ Mic active! Try blowing into your mic.";
+        enableMicBtn.style.display = 'none';
+
     } catch (err) {
         console.error("Microphone access denied or error:", err);
-        micStatus.textContent = "⚠️ Mic permission denied. You can still tap or click to blow candles!";
+        micStatus.textContent = "Microphone access denied or unavailable.";
     }
-}
+});
 
-function detectBlow() {
-    if (!isMicListening) return;
-
-    const dataArray = new Uint8Array(analyser.frequencyBinCount);
-    analyser.getByteFrequencyData(dataArray);
-
-    // Calculate total average volume level
-    let sum = 0;
-    for (let i = 0; i < dataArray.length; i++) {
-        sum += dataArray[i];
-    }
-    const averageVolume = sum / dataArray.length;
-
-    // Threshold value for detecting a "blow" sound (Adjust between 40-70 if too sensitive)
-    const BLOW_THRESHOLD = 50; 
-
-    if (averageVolume > BLOW_THRESHOLD && !cakeArt.classList.contains("candles-out")) {
-        blowCandles();
-        stopMicrophone(); // Stop mic audio once the candles are blown out
-        return;
-    }
-
-    // Keep listening as long as candles are not blown out
-    if (!cakeArt.classList.contains("candles-out")) {
-        requestAnimationFrame(detectBlow);
-    }
-}
-
-function stopMicrophone() {
-    if (micStream) {
-        micStream.getTracks().forEach(track => track.stop());
-    }
-    if (audioContext) {
+function stopListening() {
+    if (isListening && audioContext) {
+        if (microphone && microphone.mediaStream) {
+            microphone.mediaStream.getTracks().forEach(track => track.stop());
+        }
         audioContext.close();
+        isListening = false;
+        micStatus.textContent = "🎂 Candles blown out!";
     }
-    isMicListening = false;
-    micStatus.textContent = "✨ Wish blown out successfully!";
 }
-
-// Enable mic when the user clicks the button
-enableMicBtn.addEventListener("click", initMicrophone);
-
-// Also auto-stop mic if the user clicks/taps manually instead
-const originalBlowCandles = blowCandles;
-blowCandles = function() {
-    originalBlowCandles();
-    stopMicrophone();
-};
