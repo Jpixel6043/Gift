@@ -106,7 +106,7 @@ function blowCandles() {
             particleCount: 110,
             spread: 85,
             origin: { y: 0.65 },
-            colors: ["#f5b7c8", "#fff0b8", "#ffffff", "#d98ca5"]
+            colors: ["#f5b7c8", "#fff0b8", "#ffffff", "#d98ca5"]    
         });
     }
 }
@@ -116,4 +116,5 @@ cakeArt.addEventListener("click", blowCandles);
 cakeArt.addEventListener("keydown", event => {
     if (event.key === "Enter" || event.key === " ") blowCandles();
 });
+
 
