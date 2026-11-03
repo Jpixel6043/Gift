@@ -617,8 +617,10 @@ body {
     font-size: 55px;
     animation: float 3s ease-in-out infinite alternate;
 }
-.sparkle-one { top: 12%; left: 12%; }
-.sparkle-two { right: 12%; bottom: 13%; animation-delay: .8s; }
+.sparkle-one { bottom: 12%; left: 12%; }
+.sparkle-two { right: 12%; top: 13%; animation-delay: .8s; }
+.sparkle-three { top: 12%; left: 10%; }
+.sparkle-four { right: 5%; bottom: 13%; animation-delay: .8s; }
 
 /* SCENE SHARED ELEMENTS */
 .scene-page {
