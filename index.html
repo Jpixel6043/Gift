@@ -2,145 +2,155 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Happy Birthday!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ♡</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-    <h1 class="title">Click on the envelope!!</h1>
+    <!-- MAIN MENU -->
+    <main id="menu" class="page menu-page active">
+        <div class="menu-sparkle sparkle-one">✦</div>
+        <div class="menu-sparkle sparkle-two">♡</div>
+        <p class="eyebrow">A LITTLE SOMETHING FOR YOU</p>
+        <h1 class="menu-title">Choose your surprise!</h1>
+        <p class="menu-subtitle">Three little things, made with love ♡</p>
 
-    <div class="container"> 
+        <div class="option-grid">
+            <button class="option-card" data-go="letter">
+                <span class="option-icon envelope-icon">💌</span>
+                <span class="option-name">Letter</span>
+                <span class="option-hint">A message for you</span>
+            </button>
+            <button class="option-card" data-go="birthday">
+                <span class="option-icon">🎂</span>
+                <span class="option-name">Birthday Cake</span>
+                <span class="option-hint">Make a little wish</span>
+            </button>
+            <button class="option-card" data-go="cassette">
+                <span class="option-icon">📼</span>
+                <span class="option-name">Cassette</span>
+                <span class="option-hint">A song for you</span>
+            </button>
+        </div>
+        <p class="menu-footer">✧ made especially for you ✧</p>
+    </main>
 
-        <!-- Multi-Song Retro Music Player -->
-        <div class="music-player">
-            <button id="prevBtn" class="player-btn" title="Previous Song">⏮</button>
+    <!-- LETTER SCENE: your original envelope design is kept -->
+    <main id="letter" class="page scene-page letter-page">
+        <button class="back-button" data-go="menu">← Back to surprises</button>
+        <h1 class="title">Click on the envelope!!</h1>
+
+        <div class="container">
+            <div class="envelope-wrapper" id="envelopeWrapper">
+                <div class="envelope">
+                    <div class="letter">
+                        <div class="letter-content">
+                            <div class="text">
+                                <strong>Happy Birthday Love!!</strong>
+                                <p>I made this simple website just for you! It might not be much, but I hope it brings a smile to your face! Wag ka na magalit ahhh 😆😆
+                                    2-I made this simple website just for you! It might not be much, but I hope it brings a smile to your face! Wag ka na magalit ahhh 😆😆
+                                    3-I made this simple website just for you! It might not be much, but I hope it brings a smile to your face! Wag ka na magalit ahhh 😆😆
+                                    4-I made this simple website just for you! It might not be much, but I hope it brings a smile to your face! Wag ka na magalit ahhh 😆😆
+                                    5-I made this simple website just for you! It might not be much, but I hope it brings a smile to your face! Wag ka na magalit ahhh 😆😆
+                                    6-I made this simple website just for you! It might not be much, but I hope it brings a smile to your face! Wag ka na magalit ahhh 😆😆
+                                    7-I made this simple website just for you! It might not be much, but I hope it brings a smile to your face! Wag ka na magalit ahhh 😆😆
+                                    8-I made this simple website just for you! It might not be much, but I hope it brings a smile to your face! Wag ka na magalit ahhh 😆😆
+                                    9-I made this simple website just for you! It might not be much, but I hope it brings a smile to your face! Wag ka na magalit ahhh 😆😆
+                                    10-I made this simple website just for you! It might not be much, but I hope it brings a smile to your face! Wag ka na magalit ahhh 😆😆
+                                </p>
+                                <p style="font-size: 12px;"><strong>I Love You!</strong></p>
+                                <p style="margin-left: -200px;"><strong>Jp ✌️</strong></p>
+                                <div class="art-container">
+                                    <div class="pixelart-to-css"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="heart"></div>
+            </div>
+        </div>
+        <div class="decor decor-left-1">✦</div>
+        <div class="decor decor-left-2">♡</div>
+        <div class="decor decor-left-3">✧</div>
+        <div class="decor decor-right-1">♡</div>
+        <div class="decor decor-right-2">✦</div>
+    </main>
+
+    <!-- BIRTHDAY SCENE -->
+    <main id="birthday" class="page scene-page birthday-page">
+        <button class="back-button" data-go="menu">← Back to surprises</button>
+        <p class="eyebrow">TODAY IS ALL ABOUT YOU</p>
+        <h1 class="scene-heading">Happy Birthday! ♡</h1>
+        <p class="scene-subheading">Make a wish, then blow into your mic (or tap the candles)!</p>
+
+        <div class="birthday-stage">
+            <div class="balloon balloon-a">♥</div>
+            <div class="balloon balloon-b">♥</div>
+            <div class="cake-art" id="cakeArt" role="button" tabindex="0" aria-label="Blow out the candles">
+                <div class="candles">
+                    <span class="candle"><i class="flame"></i></span>
+                    <span class="candle"><i class="flame"></i></span>
+                    <span class="candle"><i class="flame"></i></span>
+                </div>
+                <div class="cake-top"></div>
+                <div class="cake-middle"><span>♡</span><span>♡</span><span>♡</span></div>
+                <div class="cake-bottom"></div>
+                <div class="cake-plate"></div>
+            </div>
+            <div class="cake-sparkle sparkle-left">✦</div>
+            <div class="cake-sparkle sparkle-right">✧</div>
+        </div>
+
+        <!-- Added Microphone Status & Controls -->
+        <div style="margin-bottom: 12px;">
+            <button id="enableMicBtn" class="pixel-button" style="padding: 6px 12px; font-size: 13px;">🎙️ Enable Mic Blowing</button>
+            <p id="micStatus" style="font-size: 12px; margin-top: 6px; color: #875d6c;"></p>
+        </div>
+
+        <!-- <button id="wishButton" class="pixel-button">Blow out the candles ✨</button> -->
+        <p id="birthdayMessage" class="birthday-message" aria-live="polite">I hope this year brings you so many reasons to smile.</p>
+    </main>
+
+    <!-- CASSETTE SCENE -->
+    <main id="cassette" class="page scene-page cassette-page">
+        <button class="back-button" data-go="menu">← Back to surprises</button>
+        <p class="eyebrow">SOMETHING TO LISTEN TO</p>
+        <h1 class="scene-heading">A little soundtrack for you</h1>
+        <p class="scene-subheading">Pick a song and enjoy ♡</p>
+
+        <div class="cassette-shell">
+            <div class="cassette-label">
+                <span class="cassette-label-small">MIXTAPE • SIDE A</span>
+                <strong>FOR YOU</strong>
+                <span class="cassette-label-line"></span>
+            </div>
+            <div class="cassette-window">
+                <div class="reel reel-left"><span></span></div>
+                <div class="tape-strip"></div>
+                <div class="reel reel-right"><span></span></div>
+            </div>
+            <div class="cassette-bottom">
+                <span>♡</span><span>PLAY WITH LOVE</span><span>♡</span>
+            </div>
+        </div>
+
+        <div class="music-player cassette-player">
+            <button id="prevBtn" class="player-btn" title="Previous Song" aria-label="Previous song">⏮</button>
             <button id="playPauseBtn" class="player-btn">▶ Play</button>
-            <button id="nextBtn" class="player-btn" title="Next Song">⏭</button>
-
+            <button id="nextBtn" class="player-btn" title="Next Song" aria-label="Next song">⏭</button>
             <div class="track-container">
                 <div id="trackTitle" class="track-title">Select a song</div>
             </div>
         </div>
+        <p class="cassette-note">A few songs that remind me of you.</p>
+        <audio id="bgMusic" preload="none"></audio>
+    </main>
 
-        <!-- Audio Element -->
-        <audio id="bgMusic"></audio>
-
-        <!-- Removed 'flap' class so it starts closed by default -->
-        <div class="envelope-wrapper" id="envelopeWrapper"> 
-            <div class="envelope">
-                <div class="letter">
-                    <div class="letter-content">
-                        <div class="text">
-                            <strong>Happy Birthday Love!!</strong>
-                            <p>I made this simple website just for you! It might not be much, but I hope it brings a smile to your face! Wag ka na magalit ahhh 😆😆</p>
-                            <p style="font-size: 12px;"><strong> I Love You! </strong></p>
-                            <p style="margin-left: -200px;"><strong>Jp ✌️</strong></p>
-                            <div class="art-container">
-                                <div class="pixelart-to-css"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>    
-            </div>
-            <div class="heart"></div>
-        </div>
-    </div>
-
-    <script> 
-        const envelopeWrapper = document.getElementById('envelopeWrapper');
-
-// 1. Define your playlist here (Add your actual mp3 filenames and titles)
-const playlist = [
-    { title: "IVOS - Captivated", src: "music\\IV OF SPADES - Captivated (Official Audio).mp3" },
-    { title: "Zild - Lia", src: "music\\zild.mp3" },
-    { title: "TONEEJAY - 711", src: "music\\toneejay.mp3" }
-];
-
-let currentTrackIndex = 0;
-const bgMusic = document.getElementById('bgMusic');
-const playPauseBtn = document.getElementById('playPauseBtn');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const trackTitle = document.getElementById('trackTitle');
-
-// Load a track into the audio player
-function loadTrack(index) {
-    bgMusic.src = playlist[index].src;
-    trackTitle.textContent = playlist[index].title;
-    bgMusic.load();
-}
-
-function playTrack() {
-    bgMusic.play().then(() => {
-        playPauseBtn.textContent = '⏸ Pause';
-    }).catch(error => {
-        console.log("Audio playback restricted:", error);
-    });
-}
-
-function pauseTrack() {
-    bgMusic.pause();
-    playPauseBtn.textContent = '▶ Play';
-}
-
-// Button Event Listeners
-playPauseBtn.addEventListener('click', () => {
-    if (bgMusic.paused) {
-        playTrack();
-    } else {
-        pauseTrack();
-    }
-});
-
-prevBtn.addEventListener('click', () => {
-    currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-    loadTrack(currentTrackIndex);
-    playTrack();
-});
-
-nextBtn.addEventListener('click', () => {
-    currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-    loadTrack(currentTrackIndex);
-    playTrack();
-});
-
-// Automatically jump to the next song when the current one finishes
-bgMusic.addEventListener('ended', () => {
-    currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-    loadTrack(currentTrackIndex);
-    playTrack();
-});
-
-// Initialize the first song on load
-loadTrack(currentTrackIndex);
-
-// Envelope click trigger (optional: starts playing music and triggers confetti when opened)[cite: 1]
-envelopeWrapper.addEventListener('click', () => {
-    const isOpen = envelopeWrapper.classList.toggle('flap');
-
-    if (isOpen) {
-        if (bgMusic.paused) {
-            playTrack();
-        }
-        
-        // Trigger confetti
-        setTimeout(() => {
-            confetti({
-                particleCount: 80,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#f1c40f', '#e74c3c', '#e67e22', '#ffffff', '#ff6b6b']
-            });
-        }, 500);
-    }
-});
-    </script>
-
-    <!-- Canvas Confetti CDN -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
