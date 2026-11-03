@@ -570,9 +570,9 @@ body {
 }
 
 .option-grid {
-    width: min(850px, 100%);
+    width: min(1100px, 100%);
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 20px;
 }
 
@@ -905,4 +905,54 @@ body {
 @media (max-width: 380px) {
     .letter-page .container { transform: scale(.7); }
     .option-card { min-height: 90px; }
+}
+
+/* --- GALLERY SCENE STYLING --- */
+
+/* Restrict resets to the gallery container to avoid affecting other scenes */
+.scene-page#gallery {
+    flex-direction: column; /* Stack back button and container vertically */
+    align-items: center;
+    justify-content: flex-start; /* Start from top so it doesn't bunch in the middle */
+    overflow-y: auto;          /* Allow vertical scrolling */
+    overflow-x: hidden;
+    padding-top: 80px;
+}
+
+.img-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start; /* Align images nicely to the top */
+    width: min(900px, 95%);
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Makes all 4 columns share equal width */
+    min-width: 0;
+}
+
+.scene-page#gallery img {
+    width: 100%;
+    height: auto; /* Maintains natural aspect ratio of your photos */
+    padding: 5px;
+    border-radius: 4px;
+    transition: transform 0.2s ease;
+}
+
+.scene-page#gallery img:hover {
+    transform: scale(1.03); /* Cute zoom effect on hover */
+}
+
+/* Responsive layout for mobile screens */
+@media only screen and (max-width: 770px) {
+    .img-container {
+        flex-direction: column; /* Stacks columns vertically on mobile */
+    }
 }
