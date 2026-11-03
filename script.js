@@ -194,6 +194,68 @@ enableMicBtn.addEventListener('click', async () => {
     }
 });
 
+// Function to start microphone listening
+async function startMic() {
+    try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            alert("Microphone API is not supported in this browser. Make sure you are using HTTPS.");
+            return;
+        }
+
+        micStatus.textContent = "Requesting microphone access...";
+
+        // Request microphone access
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+
+        // Initialize AudioContext (handles cross-browser vendor prefixes)
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioContext = new AudioContext();
+
+        // Resume AudioContext if suspended (required by iOS Safari and modern Chrome)
+        if (audioContext.state === 'suspended') {
+            await audioContext.resume();
+        }
+
+        analyser = audioContext.createAnalyser();
+        microphone = audioContext.createMediaStreamSource(stream);
+
+        javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
+        analyser.smoothingTimeConstant = 0.8;
+        analyser.fftSize = 1024;
+
+        microphone.connect(analyser);
+        analyser.connect(javascriptNode);
+        javascriptNode.connect(audioContext.destination);
+
+        javascriptNode.onaudioprocess = function () {
+            const array = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(array);
+
+            let values = 0;
+            for (let i = 0; i < array.length; i++) {
+                values += array[i];
+            }
+            const average = values / array.length;
+
+            // Blow detection threshold
+            if (average > 40 && !cakeArt.classList.contains('candles-out')) {
+                extinguishCandles();
+            }
+        };
+
+        isListening = true;
+        micStatus.textContent = "🎙️ Mic active! Try blowing into your mic.";
+        enableMicBtn.style.display = 'none';
+
+    } catch (err) {
+        console.error("Microphone error:", err);
+        micStatus.textContent = "Microphone access blocked or denied. Check browser permissions.";
+    }
+}
+
+// Bind both click and touchstart events for cross-platform compatibility
+enableMicBtn.addEventListener('click', startMic);
+
 function stopListening() {
     if (isListening && audioContext) {
         if (microphone && microphone.mediaStream) {
